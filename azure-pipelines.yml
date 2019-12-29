@@ -22,7 +22,7 @@ steps:
     ng build --prod
   displayName: 'Building'
   
- - script: |
+- script: |
     ng test
   displayName: 'Testing'
 
