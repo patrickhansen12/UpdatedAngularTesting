@@ -23,6 +23,7 @@ steps:
   displayName: 'Building'
   
 - script: |
+    cd testing
     ng test
   displayName: 'Testing'
 
