@@ -28,18 +28,18 @@ steps:
     command: custom
     customCommand: run build
     workingDir: testing
-  
-- task: PublishPipelineArtifact@0
-  inputs: 
-    artifactName: 'angular'
-    targetPath: 'testing/dist'
-    
+
 - task: Npm@1
-  displayName: 'Test Angular'
+  displayName: 'Testing'
   inputs:
     command: custom
     customCommand: run test -- --watch=false --code-coverage
     workingDir: testing
+
+- task: PublishPipelineArtifact@0
+  inputs:
+    artifactName: 'angular'
+    targetPath: 'testing/dist'
 
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish code coverage Angular results'
