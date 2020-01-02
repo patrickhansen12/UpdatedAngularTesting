@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CvrInfoService } from './cvr-info.service';
+import { CvrService } from './cvr-info.service';
 
-describe('CvrInfoService', () => {
+describe('CvrService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: CvrInfoService = TestBed.get(CvrInfoService);
+    const service: CvrService = TestBed.get(CvrService);
     expect(service).toBeTruthy();
   });
 });
