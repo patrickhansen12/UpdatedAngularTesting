@@ -27,4 +27,20 @@ steps:
   inputs: 
     artifactName: 'angular'
     targetPath: 'testing/dist'
+    
+- task: Npm@1
+  displayName: 'Test Angular'
+  inputs:
+    command: custom
+    customCommand: run test -- --watch=false --code-coverage
+    workingDir: testing
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage Angular results'
+  condition: succeededOrFailed()
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: 'testing/coverage/cobertura-coverage.xml'
+    reportDirectory: testing/coverage
+    failIfCoverageEmpty: true
 
