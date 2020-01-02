@@ -33,7 +33,7 @@ steps:
   displayName: 'Testing'
   inputs:
     command: custom
-    customCommand: run test -- --watch=false --code-coverage
+    customCommand: run test -- --watch=false --code-coverage --browser ChromeHeadless
     workingDir: testing
 
 - task: PublishPipelineArtifact@0
