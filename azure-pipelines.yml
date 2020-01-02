@@ -10,6 +10,12 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- task: DeleteFiles@1
+  displayName: 'Delete JUnit files'
+  inputs:
+    SourceFolder: testing/junit
+    Contents: 'TESTS*.xml'
+      
 - task: Npm@1
   displayName: 'Install Node'
   inputs:
@@ -37,10 +43,19 @@ steps:
 
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish code coverage Angular results'
-  condition: succeededOrFailed()
+  condition: succeededOrFailed() # Run this step, even if previous steps fail
   inputs:
     codeCoverageTool: Cobertura
     summaryFileLocation: 'testing/coverage/cobertura-coverage.xml'
     reportDirectory: testing/coverage
     failIfCoverageEmpty: true
+    
+- task: PublishTestResults@2
+  displayName: 'Publish Angular test results'
+  condition: succeededOrFailed()
+  inputs:
+    searchFolder: $(System.DefaultWorkingDirectory)/testing/junit
+    testRunTitle: Angular
+    testResultsFormat: JUnit
+    testResultsFiles: "**/TESTS*.xml"
 
