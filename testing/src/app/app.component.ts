@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
 
   private async updateCvrInfo(data) {
     console.debug('Pull information for:' + data);
-    const information = await this.cvrService.getByVat('dk', data).toPromise();
+    const information = await this.cvrService.getByVat('dk', data);
     console.debug('Done:');
     console.debug(information);
 

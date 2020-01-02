@@ -44,43 +44,12 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('h1').textContent).toContain('Welcome to testing!');
   });
 
-  it('should have a field telling to enter cvr number', (done) => {
+  it('should have a field telling to enter cvr number', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const component = fixture.componentInstance;
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('#companyNameFast').textContent).toContain('Please input CVR number.');
-
-    const companyObject: ICompany = {
-      address: '',
-      city: '',
-      companycode: 0,
-      companydesc: '',
-      creditbankrupt: false,
-      email: '',
-      employees: '',
-      industrycode: 0,
-      industrydesc: '',
-      phone: 0,
-      productionunits: [],
-      protected: false,
-      startdate: '',
-      t: 0,
-      version: 0,
-      zipcode: 0,
-      vat: null,
-      name: 'Test OK'
-    };
-
-    const spy = spyOn(cvrService, 'getByVat').and.returnValue(companyObject);
-
-    component.cvrField.setValue('hello'); // set the value of the "text field";
-
-    spy.calls.mostRecent().returnValue.then(() => {
-      fixture.detectChanges();
-      expect(compiled.querySelector('#companyNameFast').textContent).toContain('Test OK');
-      done();
-    });
   });
 
   it('should show the company name of the cvr number enterd', (done) => {
@@ -110,13 +79,13 @@ describe('AppComponent', () => {
       name: 'Test OK'
     };
 
-    const spy = spyOn(cvrService, 'getByVat').and.returnValue(companyObject);
-
+    const spy = spyOn(cvrService, 'getByVat').and.returnValue(Promise.resolve(companyObject));
+    component.ngOnInit();
     component.cvrField.setValue('hello'); // set the value of the "text field";
-
+    
     spy.calls.mostRecent().returnValue.then(() => {
       fixture.detectChanges();
-      expect(compiled.querySelector('#companyNameFast').textContent).toContain('Test OK');
+      expect(compiled.querySelector('#companyNameFast').textContent).toBe('Test OK');
       done();
     });
   });

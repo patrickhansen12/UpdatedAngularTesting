@@ -10,7 +10,7 @@ export class CvrService {
 
   constructor(private http: HttpClient) { }
 
-  public getByVat(cc: string, vat: number): Observable<ICompany> {
-    return this.http.get<ICompany>('https://cvrapi.dk/api?country=' + cc + '&vat=' + vat);
+  public getByVat(cc: string, vat: number): Promise<ICompany> {
+    return this.http.get<ICompany>('https://cvrapi.dk/api?country=' + cc + '&vat=' + vat).toPromise();
   }
 }
