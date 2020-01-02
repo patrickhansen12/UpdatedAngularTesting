@@ -1,15 +1,20 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import {CvrService} from './cvr-info.service';
+import {ICompany} from './company.model';
 
 describe('AppComponent', () => {
+
+  let cvrService: CvrService;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
       ],
     }).compileComponents();
   }));
@@ -31,5 +36,44 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain('Welcome to testing!');
+  });
+
+  it('should have a field telling to enter cvr number', (done) => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('#companyNameFast').textContent).toContain('Please input CVR number.');
+
+    const companyObject: ICompany = {
+      address: '',
+      city: '',
+      companycode: 0,
+      companydesc: '',
+      creditbankrupt: false,
+      email: '',
+      employees: '',
+      industrycode: 0,
+      industrydesc: '',
+      phone: 0,
+      productionunits: [],
+      protected: false,
+      startdate: '',
+      t: 0,
+      version: 0,
+      zipcode: 0,
+      vat: null,
+      name: 'Test OK'
+    };
+
+    const spy = spyOn(cvrService, 'getByVat').and.returnValue(companyObject);
+
+    component.cvrField.setValue('hello'); // set the value of the "text field";
+
+    spy.calls.mostRecent().returnValue.then(() => {
+      fixture.detectChanges();
+      expect(compiled.querySelector('#companyNameFast').textContent).toContain('Test OK');
+      done();
+    });
   });
 });
