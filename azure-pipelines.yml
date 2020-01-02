@@ -20,7 +20,7 @@ steps:
   displayName: 'Building'
   inputs:
     command: custom
-    customCommad: run build
+    customCommand: run build
     workingDir: testing
   
 - task: PublishPipelineArtifact@0
