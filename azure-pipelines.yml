@@ -10,20 +10,21 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: NodeTool@0
+- task: Npm@1
+  displayName: 'Install Node'
   inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+    command: install
+    workingDir: testing
 
-- script: |
-    cd testing
-    npm install -g @angular/cli
-    npm install
-    ng build --prod
+- task: Npm@1
   displayName: 'Building'
+  inputs:
+    command: custom
+    customCommad: run build
+    workingDir: testing
   
-- script: |
-    cd testing
-    ng test
-  displayName: 'Testing'
+- task: PublishPipelineArtifact@0
+  inputs: 
+    artifactName: 'angular'
+    targetPath: 'testing/dist'
 
