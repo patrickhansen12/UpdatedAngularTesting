@@ -31,6 +31,19 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
+  it('should render the joke.jpg asset/image folder', async(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('div.joke>img').src).toContain('assets/images/joke.jpg');
+  }));
+
+  it('should render the loading.gif from our asset/image folder', async(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('div.loading>img').src).toContain('assets/images/loading.gif');
+  }));
   it(`should have as title 'testing'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
@@ -82,7 +95,7 @@ describe('AppComponent', () => {
     const spy = spyOn(cvrService, 'getByVat').and.returnValue(Promise.resolve(companyObject));
     component.ngOnInit();
     component.cvrField.setValue('hello'); // set the value of the "text field";
-    
+
     spy.calls.mostRecent().returnValue.then(() => {
       fixture.detectChanges();
       expect(compiled.querySelector('#companyNameFast').textContent).toBe('Test OK');
@@ -120,7 +133,7 @@ describe('AppComponent', () => {
     const spy = spyOn(cvrService, 'getByVat').and.returnValue(Promise.resolve(companyObject));
     component.ngOnInit();
     component.cvrField.setValue('hello'); // set the value of the "text field";
-    
+
     fixture.whenStable().then(() =>{
       fixture.detectChanges();
       expect(compiled.querySelector('#companyNameFast').textContent).toBe('Test OK');
@@ -157,8 +170,8 @@ describe('AppComponent', () => {
     const spy = spyOn(cvrService, 'getByVat').and.returnValue(Promise.resolve(companyObject));
     component.ngOnInit();
     component.cvrField.setValue('hello'); // set the value of the "text field";
-    
-    tick();    
+
+    tick();
     fixture.detectChanges();
     expect(compiled.querySelector('#companyNameFast').textContent).toBe('Test OK');
   }));
